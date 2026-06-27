@@ -1,3 +1,28 @@
+# ==========================================================
+# TUGAS MATA KULIAH MATEMATIKA DISKRIT (TB-B)
+#
+# Judul:
+# Sistem Rekomendasi Film Menggunakan
+# User-Based Collaborative Filtering
+# dengan Jaccard Similarity dan Graf Bipartit
+#
+# Kelompok 7
+# - Fuad Wigo Wicaksono
+# - Muhammad Syarofi Kunaedi
+# - Valent Ichsanul Fitri
+#
+# Program Studi Informatika
+# Universitas Muhammadiyah Cirebon
+# ==========================================================
+
+# ==========================================================
+# IMPLEMENTASI KONSEP MATEMATIKA DISKRIT
+# - Teori Himpunan (Set Theory)
+# - Jaccard Similarity
+# - Graf Bipartit (Graph Theory)
+# - Matriks Similaritas
+# ==========================================================
+
 import time
 import networkx as nx # type: ignore
 import matplotlib.pyplot as plt
@@ -5,11 +30,14 @@ import numpy as np
 from collections import defaultdict
 
 # ==========================
-# DATA PENGGUNA (DIPERBESAR)
+# DATA PENGGUNA
 # ==========================
 
-# MATDIS: Representasi relasi User-Film sebagai himpunan (set theory)
-# Setiap user memiliki himpunan film yang ditonton
+# MATDIS:
+# Representasi data menggunakan Teori Himpunan (Set Theory).
+# Setiap pengguna direpresentasikan sebagai himpunan (set)
+# yang berisi daftar film yang telah ditonton.
+
 users = {
     "Andi": {"Avengers", "Batman", "Spiderman", "Iron Man"},
     "Budi": {"Batman", "Spiderman", "Superman", "Wonder Woman"},
@@ -21,13 +49,18 @@ users = {
     "Hana": {"Batman", "Wonder Woman", "Spiderman", "Iron Man"}
 }
 
-# ==========================
+# ==========================================================
 # FUNGSI JACCARD SIMILARITY
-# ==========================
+# ==========================================================
 
-# MATDIS: Implementasi Similarity Jaccard - Konsep Himpunan (Set Theory)
-# Jaccard(A,B) = |A ∩ B| / |A ∪ B|
-# Mengukur kemiripan antara dua himpunan film
+# MATDIS:
+# Implementasi Similarity Jaccard.
+#
+# Rumus:
+# J(A,B) = |A ∩ B| / |A ∪ B|
+#
+# Digunakan untuk mengukur tingkat kemiripan
+# antara dua himpunan film.
 def jaccard_similarity(user1, user2):
     # MATDIS: Operasi Irisan (∩) dan Gabungan (∪) pada himpunan
     set1 = users[user1]
@@ -37,12 +70,13 @@ def jaccard_similarity(user1, user2):
     # MATDIS: Pembagian cardinalitas (jumlah elemen) untuk mendapatkan similarity
     return len(intersection) / len(union) if union else 0
 
-# ==========================
-# FUNGSI REKOMENDASI (TOP-N)
-# ==========================
+# ==========================================================
+# FUNGSI REKOMENDASI (USER-BASED COLLABORATIVE FILTERING)
+# ==========================================================
 
-# MATDIS: Algoritma Collaborative Filtering berbasis Graf
-# Menggunakan konsep Graph Theory dan Similarity Measurement
+# MATDIS:
+# Menggunakan nilai Jaccard Similarity
+# sebagai bobot untuk menentukan rekomendasi film.
 def get_recommendations(target, top_n=2):
     """
     Menghasilkan rekomendasi film untuk target user.
@@ -77,12 +111,18 @@ def get_recommendations(target, top_n=2):
     sorted_movies = sorted(movie_weight.items(), key=lambda x: x[1], reverse=True)
     return sorted_movies, top_users
 
-# ==========================
+# ==========================================================
 # FUNGSI VISUALISASI GRAF BIPARTIT
-# ==========================
+# ==========================================================
 
-# MATDIS: Implementasi Graph Theory - Bipartite Graph
-# Graf bipartit dengan dua partisi: User (L) dan Film (R)
+# MATDIS:
+# Implementasi Graph Theory menggunakan Graf Bipartit.
+#
+# Graf terdiri atas dua himpunan simpul:
+# - User
+# - Film
+#
+# Edge hanya menghubungkan User dengan Film.
 def plot_bipartite_graph():
     # MATDIS: Membuat graf kosong menggunakan NetworkX
     G = nx.Graph()
@@ -124,12 +164,14 @@ def plot_bipartite_graph():
     plt.tight_layout()
     plt.show()
 
-# ==========================
+# ==========================================================
 # FUNGSI HEATMAP SIMILARITAS
-# ==========================
+# ==========================================================
 
-# MATDIS: Visualisasi Matriks Similaritas (Adjacency Matrix)
-# Matriks ini merepresentasikan hubungan antar user berdasarkan kemiripan
+# MATDIS:
+# Matriks Similaritas merepresentasikan
+# hubungan antar pengguna berdasarkan
+# nilai Jaccard Similarity.
 def plot_similarity_heatmap():
     user_list = list(users.keys())
     n = len(user_list)
@@ -162,9 +204,14 @@ def plot_similarity_heatmap():
     plt.tight_layout()
     plt.show()
 
-# ==========================
-# PROGRAM UTAMA (MENU)
-# ==========================
+# ==========================================
+# PROGRAM UTAMA
+# ==========================================
+
+# MATDIS:
+# Mengintegrasikan seluruh konsep
+# Matematika Diskrit ke dalam
+# Sistem Rekomendasi Film.
 
 def main():
     print("=" * 60)
